@@ -1,0 +1,119 @@
+1. **Basic Coin Flip:**
+
+```python
+from qiskit import QuantumCircuit, Aer, execute
+
+# Create a quantum circuit with one qubit
+qc = QuantumCircuit(1, 1)
+
+# Apply Hadamard gate to create superposition
+qc.h(0)
+
+# Measure the qubit
+qc.measure(0, 0)
+
+# Simulate the circuit
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(qc, simulator, shots=1)
+
+# Get the result
+result = job.result()
+counts = result.get_counts(qc)
+print(counts)
+```
+
+2. **Coin Flip with Multiple Shots:**
+
+```python
+from qiskit import QuantumCircuit, Aer, execute
+
+# Create a quantum circuit with one qubit
+qc = QuantumCircuit(1, 1)
+
+# Apply Hadamard gate to create superposition
+qc.h(0)
+
+# Measure the qubit
+qc.measure(0, 0)
+
+# Simulate the circuit with multiple shots
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(qc, simulator, shots=10)
+
+# Get the result
+result = job.result()
+counts = result.get_counts(qc)
+print(counts)
+```
+
+3. **Coin Flip with Bias (Not Fair Coin):**
+
+```python
+from qiskit import QuantumCircuit, Aer, execute
+
+# Create a quantum circuit with one qubit
+qc = QuantumCircuit(1, 1)
+
+# Apply rotation gate to introduce bias
+qc.rx(0.3, 0)  # Angle can be adjusted for bias
+
+# Measure the qubit
+qc.measure(0, 0)
+
+# Simulate the circuit with multiple shots
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(qc, simulator, shots=10)
+
+# Get the result
+result = job.result()
+counts = result.get_counts(qc)
+print(counts)
+```
+
+4. **Coin Flip with Bell State Measurement:**
+
+```python
+from qiskit import QuantumCircuit, Aer, execute
+
+# Create a quantum circuit with two qubits
+qc = QuantumCircuit(2, 2)
+
+# Apply Hadamard gate to create superposition
+qc.h(0)
+qc.cx(0, 1)
+
+# Measure both qubits
+qc.measure([0, 1], [0, 1])
+
+# Simulate the circuit with multiple shots
+simulator = Aer.get_backend('qasm_simulator')
+job = execute(qc, simulator, shots=10)
+
+# Get the result
+result = job.result()
+counts = result.get_counts(qc)
+print(counts)
+```
+
+5. **Coin Flip with Grover's Algorithm:**
+
+```python
+from qiskit import QuantumCircuit, Aer, execute
+from qiskit.aqua.algorithms import Grover
+from qiskit.aqua.components.oracles import TruthTableOracle
+
+# Define the oracle for the coin flip
+oracle = TruthTableOracle('11')
+
+# Create Grover's algorithm instance
+grover = Grover(oracle)
+
+# Simulate Grover's algorithm
+backend = Aer.get_backend('qasm_simulator')
+result = grover.run(backend)
+
+# Get the result
+print("Most likely outcome:", result['result'])
+```
+
+These scripts demonstrate various ways to simulate a coin flip experiment using Qiskit, including both simple and more advanced techniques such as biasing the coin or using Grover's algorithm.
