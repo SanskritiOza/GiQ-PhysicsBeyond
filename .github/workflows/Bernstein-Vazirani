@@ -1,0 +1,102 @@
+1. **Import Necessary Libraries and Initialize Quantum Circuit**:
+
+```python
+from qiskit import QuantumCircuit, Aer, transpile, assemble
+from qiskit.visualization import plot_histogram
+
+# Number of qubits (n) and number of bits in the hidden integer (m)
+n = 4
+m = '1101'  # Example hidden integer
+
+# Create quantum circuit with n qubits and n classical bits
+bv_circuit = QuantumCircuit(n+1, n)
+
+# Apply Hadamard gates to first n qubits
+bv_circuit.h(range(n))
+
+# Apply X gate to last qubit and Hadamard gate to last qubit
+bv_circuit.x(n)
+bv_circuit.h(n)
+
+# Measure all qubits
+bv_circuit.measure(range(n), range(n))
+
+# Draw the circuit
+print(bv_circuit.draw())
+```
+
+2. **Simulate the Circuit**:
+
+```python
+simulator = Aer.get_backend('qasm_simulator')
+
+# Execute the circuit on the qasm simulator
+job = assemble(transpile(bv_circuit, simulator), shots=1)
+
+# Run the job
+result = simulator.run(job).result()
+
+# Get counts
+counts = result.get_counts(bv_circuit)
+print(counts)
+```
+
+3. **Function to Construct the Bernstein-Vazirani Circuit for a Given Hidden Integer**:
+
+```python
+def bv_circuit_for_integer(hidden_int):
+    n = len(hidden_int)
+    bv_circuit = QuantumCircuit(n+1, n)
+    bv_circuit.h(range(n))
+    bv_circuit.x(n)
+    bv_circuit.h(n)
+    for i, bit in enumerate(reversed(hidden_int)):
+        if bit == '1':
+            bv_circuit.cx(i, n)
+    bv_circuit.h(range(n))
+    bv_circuit.measure(range(n), range(n))
+    return bv_circuit
+
+# Example usage:
+hidden_int = '101010'
+bv_circuit_example = bv_circuit_for_integer(hidden_int)
+print(bv_circuit_example.draw())
+```
+
+4. **Execute and Plot Results on Real Quantum Hardware** (assuming you have access to IBM Quantum Experience):
+
+```python
+from qiskit import IBMQ
+
+# Load IBM Quantum Experience account
+IBMQ.load_account()
+
+# Choose backend
+provider = IBMQ.get_provider(hub='ibm-q')
+backend = provider.get_backend('ibmq_16_melbourne')
+
+# Execute the circuit on real quantum hardware
+job = assemble(transpile(bv_circuit, backend), shots=8192)
+result = backend.run(job).result()
+
+# Get counts
+counts = result.get_counts(bv_circuit)
+print(counts)
+
+# Plot histogram
+plot_histogram(counts)
+```
+
+5. **Function to Retrieve Hidden Integer from Measurement Outcome**:
+
+```python
+def retrieve_hidden_int(counts):
+    for outcome in counts:
+        return outcome[::-1]
+
+# Example usage:
+hidden_int_retrieved = retrieve_hidden_int(counts)
+print("Hidden integer retrieved:", hidden_int_retrieved)
+```
+
+These scripts provide a comprehensive approach to implementing and running the Bernstein-Vazirani algorithm using Qiskit. You can execute them step by step to understand each part or combine them into a single script for convenience.
