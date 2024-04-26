@@ -1,0 +1,157 @@
+1. **Test Script 1: Create Bell State for |00⟩ input**
+   
+   ```python
+   from qiskit import QuantumCircuit, Aer, execute
+   from qiskit.visualization import plot_histogram
+
+   # Define the quantum circuit
+   qc = QuantumCircuit(2, 2)
+
+   # Apply Hadamard gate to the first qubit
+   qc.h(0)
+   # Apply CNOT gate with control qubit 1 and target qubit 0
+   qc.cx(0, 1)
+
+   # Measure qubits
+   qc.measure([0, 1], [0, 1])
+
+   # Simulate the quantum circuit
+   simulator = Aer.get_backend('qasm_simulator')
+   job = execute(qc, simulator, shots=1024)
+   result = job.result()
+
+   # Plot measurement results
+   counts = result.get_counts(qc)
+   print(counts)
+   plot_histogram(counts)
+   ```
+
+2. **Test Script 2: Create Bell State for |01⟩ input**
+   
+   ```python
+   from qiskit import QuantumCircuit, Aer, execute
+   from qiskit.visualization import plot_histogram
+
+   # Define the quantum circuit
+   qc = QuantumCircuit(2, 2)
+
+   # Apply X gate to the second qubit
+   qc.x(1)
+   # Apply Hadamard gate to the first qubit
+   qc.h(0)
+   # Apply CNOT gate with control qubit 1 and target qubit 0
+   qc.cx(0, 1)
+
+   # Measure qubits
+   qc.measure([0, 1], [0, 1])
+
+   # Simulate the quantum circuit
+   simulator = Aer.get_backend('qasm_simulator')
+   job = execute(qc, simulator, shots=1024)
+   result = job.result()
+
+   # Plot measurement results
+   counts = result.get_counts(qc)
+   print(counts)
+   plot_histogram(counts)
+   ```
+
+3. **Test Script 3: Create Bell State for |10⟩ input**
+   
+   ```python
+   from qiskit import QuantumCircuit, Aer, execute
+   from qiskit.visualization import plot_histogram
+
+   # Define the quantum circuit
+   qc = QuantumCircuit(2, 2)
+
+   # Apply X gate to the first qubit
+   qc.x(0)
+   # Apply Hadamard gate to the first qubit
+   qc.h(0)
+   # Apply CNOT gate with control qubit 1 and target qubit 0
+   qc.cx(0, 1)
+
+   # Measure qubits
+   qc.measure([0, 1], [0, 1])
+
+   # Simulate the quantum circuit
+   simulator = Aer.get_backend('qasm_simulator')
+   job = execute(qc, simulator, shots=1024)
+   result = job.result()
+
+   # Plot measurement results
+   counts = result.get_counts(qc)
+   print(counts)
+   plot_histogram(counts)
+   ```
+
+4. **Test Script 4: Create Bell State for |11⟩ input**
+   
+   ```python
+   from qiskit import QuantumCircuit, Aer, execute
+   from qiskit.visualization import plot_histogram
+
+   # Define the quantum circuit
+   qc = QuantumCircuit(2, 2)
+
+   # Apply X gate to the first and second qubits
+   qc.x(0)
+   qc.x(1)
+   # Apply Hadamard gate to the first qubit
+   qc.h(0)
+   # Apply CNOT gate with control qubit 1 and target qubit 0
+   qc.cx(0, 1)
+
+   # Measure qubits
+   qc.measure([0, 1], [0, 1])
+
+   # Simulate the quantum circuit
+   simulator = Aer.get_backend('qasm_simulator')
+   job = execute(qc, simulator, shots=1024)
+   result = job.result()
+
+   # Plot measurement results
+   counts = result.get_counts(qc)
+   print(counts)
+   plot_histogram(counts)
+   ```
+
+5. **Test Script 5: General Test Script for Random Inputs**
+   
+   ```python
+   from qiskit import QuantumCircuit, Aer, execute
+   from qiskit.visualization import plot_histogram
+   import numpy as np
+
+   # Define the quantum circuit
+   qc = QuantumCircuit(2, 2)
+
+   # Generate random input state
+   input_state = np.random.randint(2, size=2)
+
+   # Apply X gate based on the random input state
+   for i in range(len(input_state)):
+       if input_state[i] == 1:
+           qc.x(i)
+
+   # Apply Hadamard gate to the first qubit
+   qc.h(0)
+   # Apply CNOT gate with control qubit 1 and target qubit 0
+   qc.cx(0, 1)
+
+   # Measure qubits
+   qc.measure([0, 1], [0, 1])
+
+   # Simulate the quantum circuit
+   simulator = Aer.get_backend('qasm_simulator')
+   job = execute(qc, simulator, shots=1024)
+   result = job.result()
+
+   # Plot measurement results
+   counts = result.get_counts(qc)
+   print(counts)
+   plot_histogram(counts)
+   ```
+
+These scripts test the creation of Bell states for different input configurations, including random input states in the last script.
