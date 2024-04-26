@@ -1,0 +1,185 @@
+1. **Teleporting |0⟩ State:**
+
+```python
+from qiskit import QuantumCircuit, Aer, transpile, assemble
+
+# Create a quantum circuit with 3 qubits and 3 classical bits
+qc = QuantumCircuit(3, 3)
+
+# Prepare the state to be teleported
+qc.h(0)
+qc.cx(0, 1)
+
+# Create entanglement between qubits 1 and 2
+qc.h(1)
+qc.cx(1, 2)
+
+# Apply a measurement to qubits 0 and 1
+qc.barrier()
+qc.measure([0, 1], [0, 1])
+
+# Apply gates based on the measurement results
+qc.barrier()
+qc.cx(1, 2)
+qc.cz(0, 2)
+
+# Measure the result of the teleportation
+qc.measure(2, 2)
+
+# Simulate the circuit
+simulator = Aer.get_backend('qasm_simulator')
+job = assemble(qc)
+result = simulator.run(job).result()
+counts = result.get_counts(qc)
+print(counts)
+```
+
+2. **Teleporting |1⟩ State:**
+
+```python
+from qiskit import QuantumCircuit, Aer, transpile, assemble
+
+# Create a quantum circuit with 3 qubits and 3 classical bits
+qc = QuantumCircuit(3, 3)
+
+# Prepare the state to be teleported
+qc.x(0)
+qc.h(0)
+qc.cx(0, 1)
+
+# Create entanglement between qubits 1 and 2
+qc.h(1)
+qc.cx(1, 2)
+
+# Apply a measurement to qubits 0 and 1
+qc.barrier()
+qc.measure([0, 1], [0, 1])
+
+# Apply gates based on the measurement results
+qc.barrier()
+qc.cx(1, 2)
+qc.cz(0, 2)
+
+# Measure the result of the teleportation
+qc.measure(2, 2)
+
+# Simulate the circuit
+simulator = Aer.get_backend('qasm_simulator')
+job = assemble(qc)
+result = simulator.run(job).result()
+counts = result.get_counts(qc)
+print(counts)
+```
+
+3. **Teleporting |+⟩ State:**
+
+```python
+from qiskit import QuantumCircuit, Aer, transpile, assemble
+
+# Create a quantum circuit with 3 qubits and 3 classical bits
+qc = QuantumCircuit(3, 3)
+
+# Prepare the state to be teleported
+qc.h(0)
+qc.h(0)
+qc.cx(0, 1)
+
+# Create entanglement between qubits 1 and 2
+qc.h(1)
+qc.cx(1, 2)
+
+# Apply a measurement to qubits 0 and 1
+qc.barrier()
+qc.measure([0, 1], [0, 1])
+
+# Apply gates based on the measurement results
+qc.barrier()
+qc.cx(1, 2)
+qc.cz(0, 2)
+
+# Measure the result of the teleportation
+qc.measure(2, 2)
+
+# Simulate the circuit
+simulator = Aer.get_backend('qasm_simulator')
+job = assemble(qc)
+result = simulator.run(job).result()
+counts = result.get_counts(qc)
+print(counts)
+```
+
+4. **Teleporting |-⟩ State:**
+
+```python
+from qiskit import QuantumCircuit, Aer, transpile, assemble
+
+# Create a quantum circuit with 3 qubits and 3 classical bits
+qc = QuantumCircuit(3, 3)
+
+# Prepare the state to be teleported
+qc.h(0)
+qc.x(0)
+qc.cx(0, 1)
+
+# Create entanglement between qubits 1 and 2
+qc.h(1)
+qc.cx(1, 2)
+
+# Apply a measurement to qubits 0 and 1
+qc.barrier()
+qc.measure([0, 1], [0, 1])
+
+# Apply gates based on the measurement results
+qc.barrier()
+qc.cx(1, 2)
+qc.cz(0, 2)
+
+# Measure the result of the teleportation
+qc.measure(2, 2)
+
+# Simulate the circuit
+simulator = Aer.get_backend('qasm_simulator')
+job = assemble(qc)
+result = simulator.run(job).result()
+counts = result.get_counts(qc)
+print(counts)
+```
+
+5. **Teleporting Bell State (|Φ+⟩):**
+
+```python
+from qiskit import QuantumCircuit, Aer, transpile, assemble
+
+# Create a quantum circuit with 3 qubits and 3 classical bits
+qc = QuantumCircuit(3, 3)
+
+# Prepare the state to be teleported
+qc.h(0)
+qc.h(1)
+qc.cx(0, 1)
+
+# Create entanglement between qubits 1 and 2
+qc.h(1)
+qc.cx(1, 2)
+
+# Apply a measurement to qubits 0 and 1
+qc.barrier()
+qc.measure([0, 1], [0, 1])
+
+# Apply gates based on the measurement results
+qc.barrier()
+qc.cx(1, 2)
+qc.cz(0, 2)
+
+# Measure the result of the teleportation
+qc.measure(2, 2)
+
+# Simulate the circuit
+simulator = Aer.get_backend('qasm_simulator')
+job = assemble(qc)
+result = simulator.run(job).result()
+counts = result.get_counts(qc)
+print(counts)
+```
+
+These scripts create quantum circuits to teleport various states using the principles of quantum teleportation. You can run them using Qiskit and a suitable quantum simulator or backend.
